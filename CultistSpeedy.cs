@@ -17,15 +17,14 @@ namespace CultistSpeedy
         {
             get
             {
-                try
                 {
                     var tabletopManager = (TabletopManager)Registry.Retrieve<ITabletopManager>();
+                    if (tabletopManager == null)
+                    {
+                        this.Logger.LogError("Could not fetch TabletopManager");
+                    }
+
                     return tabletopManager._tabletop;
-                }
-                catch (System.Exception e)
-                {
-                    this.Logger.LogError("Failed getting token container " + e.Message);
-                    return null;
                 }
             }
         }
@@ -37,19 +36,19 @@ namespace CultistSpeedy
                 var tabletopManager = (TabletopManager)Registry.Retrieve<ITabletopManager>();
                 if (tabletopManager == null)
                 {
-                    this.Logger.LogError("CultistSpeedy - Could not fetch TabletopManager");
+                    this.Logger.LogError("Could not fetch TabletopManager");
                 }
 
                 var heartField = tabletopManager.GetType().GetField("_heart", BindingFlags.NonPublic | BindingFlags.Instance);
                 if (heartField == null)
                 {
-                    this.Logger.LogError("CultistSpeedy - Could not get TabletopManager._heart field");
+                    this.Logger.LogError("Could not get TabletopManager._heart field");
                 }
 
                 var heart = (Heart)heartField.GetValue(tabletopManager);
                 if (heart == null)
                 {
-                    this.Logger.LogError("CultistSpeedy - TabletopManager._heart is null");
+                    this.Logger.LogError("TabletopManager._heart is null");
                 }
 
                 return heart;
@@ -108,7 +107,7 @@ namespace CultistSpeedy
             }
 
             heart.AdvanceTime(timeRemaining);
-            this.Logger.LogInfo("CultistSpeedy - Time incremented by " + timeRemaining);
+            this.Logger.LogInfo("Time incremented by " + timeRemaining);
         }
 
         IEnumerable<SituationToken> GetAllSituations()
