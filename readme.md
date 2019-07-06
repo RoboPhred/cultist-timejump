@@ -24,18 +24,52 @@ You may have to run Cultist Simulator once after installing BepInEx to generate 
 ApplyRuntimePatches = false
 ```
 
-You can test to ensure the plugins are being loaded by turning on the debug console in the config file.
+### Installing the mod to BepInEx
+
+Place the CultistSpeedy.dll file in `Cultist Sumulator/BepInEx/Plugins`
+
+### Troubleshooting
+
+If the mod isn't working, you can turn on the BepInEx logs to see what is going on.
+
+Open your BepInEx config file at `Cultist Simulator/BepInEx/config/BepInEx.cfg` and enable the console by changing the `Enabled` key of `[Logging.Console]` to `true`.
 ```
 [Logging.Console]
 Enabled = true
 ```
 
-If you do not see BepInEx debug output, then the `ApplyRuntimePatches` setting is probably still enabled, causing BepInEx to fail to initialize.
-A successful BepInEx start will emit log messages to tell you it is scanning for and loading plugins appropriately.
+Doing this will create a terminal window when you launch cultist simulator.  If you do not see this new window open, then BepInEx is probably not installed correctly,
+or the config file is misconfigured.
 
-### Installing the mod to BepInEx
+Once you get the window, check its output after you hit the play button on the Cultist Simulator launcher.  You can either drag the terminal window to another
+monitor, or tab out of Cultist Simulator to check it after launch.
 
-Place the CultistSpeedy.dll file in `Cultist Sumulator/BepInEx/Plugins`
+If BepInEx is installed and configured properly, you should see messages similar to the following:
+```
+[Message:   BepInEx] BepInEx 5.0.0.0 RC1 - cultistsimulator
+[Message:   BepInEx] Compiled in Unity v2018 mode
+[Info   :   BepInEx] Running under Unity v2019.1.0.2698131
+[Message:   BepInEx] Preloader started
+[Info   :   BepInEx] 1 patcher plugin(s) loaded
+[Info   :   BepInEx] Patching [UnityEngine.CoreModule] with [BepInEx.Chainloader]
+[Message:   BepInEx] Preloader finished
+```
+
+If you do not see these messages, and your terminal window remains blank, then you probably forgot to turn off `AllowRuntimePatches`.  Read the section on Installing again.
+
+Once you have confirmed BepInEx is installed properly, look for the mod loading message.  Once you start the game from the launcher, the terminal window should contain:
+```
+[Info   :   BepInEx] Loading [CultistSpeedy 0.0.1]
+```
+and
+```
+[Info   :CultistSpeedy] CultistSpeedy initialized.
+```
+
+If you do not see these lines, then the mod isn't in the correct folder.  Check the Installation instructions for details on where to put the mod.
+
+If you have confirmed all of the above and still are having trouble, try looking at the terminal for lines starting with `[Error  :CultistSpeedy]`.  The mod will
+try to log errors when it cannot do it's job properly.  Create a github issue with any CultistSpeedy error messages you find, and I will try to help you further.
 
 ## Development
 
