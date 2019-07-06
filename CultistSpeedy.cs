@@ -1,0 +1,141 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using Assets.Core;
+using Assets.Core.Interfaces;
+using Assets.CS.TabletopUI;
+using Assets.TabletopUi;
+using TabletopUi.Scripts.Interfaces;
+using UnityEngine;
+
+namespace CultistPupeteer
+{
+    [BepInEx.BepInPlugin("net.robophreddev.CultistSimulator.CultistSpeedy", "CultistSpeedy", "0.0.1")]
+    public class CultistPupeteerMod : BepInEx.BaseUnityPlugin
+    {
+        private bool _keyPressLatch = false;
+
+        private TabletopTokenContainer TabletopTokenContainer
+        {
+            get
+            {
+                try
+                {
+                    var tabletopManager = (TabletopManager)Registry.Retrieve<ITabletopManager>();
+                    return tabletopManager._tabletop;
+                }
+                catch (System.Exception e)
+                {
+                    this.Logger.LogError("Failed getting token container " + e.Message);
+                    return null;
+                }
+            }
+        }
+
+        private Heart Heart
+        {
+            get
+            {
+                var tabletopManager = (TabletopManager)Registry.Retrieve<ITabletopManager>();
+                if (tabletopManager == null)
+                {
+                    this.Logger.LogError("CultistSpeedy - Could not fetch TabletopManager");
+                }
+
+                var heartField = tabletopManager.GetType().GetField("_heart", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (heartField == null)
+                {
+                    this.Logger.LogError("CultistSpeedy - Could not get TabletopManager._heart field");
+                }
+
+                var heart = (Heart)heartField.GetValue(tabletopManager);
+                if (heart == null)
+                {
+                    this.Logger.LogError("CultistSpeedy - TabletopManager._heart is null");
+                }
+
+                return heart;
+            }
+        }
+
+
+        void Start()
+        {
+            this.Logger.LogInfo("CultistSpeedy initialized.");
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F7) && !this._keyPressLatch)
+            {
+                this._keyPressLatch = true;
+                // this.SetSpeedFaster();
+            }
+            else if (Input.GetKeyDown(KeyCode.F5) && !this._keyPressLatch)
+            {
+                this._keyPressLatch = true;
+                this.JumpToNextSituationEvent();
+            }
+            else
+            {
+                this._keyPressLatch = false;
+            }
+        }
+
+        void JumpToNextSituationEvent()
+        {
+            var ongoingSituations =
+                from situation in this.GetAllSituations()
+                where this.IsSituationOngoing(situation)
+                orderby situation.SituationController.SituationClock.TimeRemaining
+                select situation;
+
+            var nextSituationToElapse = ongoingSituations.FirstOrDefault();
+            if (nextSituationToElapse == null)
+            {
+                // No situations available
+                return;
+            }
+
+            var timeRemaining = nextSituationToElapse.SituationController.SituationClock.TimeRemaining;
+
+            // I am not sure what unit the interval is in compared to TimeRemaining.
+            // The Heart class has a 'usualInterval' variable set to 0.05, which is used as the interval every beat.
+            //  On fast speed, this is multiplied by 3.
+
+            // Going to assume this wants an interval in seconds for now.
+            var heart = this.Heart;
+            if (heart == null)
+            {
+                // Cant find the heart controller, so we cannot do anything.
+                return;
+            }
+
+            heart.AdvanceTime(timeRemaining);
+            this.Logger.LogInfo("CultistSpeedy - Time incremented by " + timeRemaining);
+        }
+
+        IEnumerable<SituationToken> GetAllSituations()
+        {
+            foreach (var token in TabletopTokenContainer.GetTokens())
+            {
+                var situationToken = token as SituationToken;
+                if (situationToken != null)
+                {
+                    yield return situationToken;
+                }
+            }
+        }
+
+        bool IsSituationOngoing(SituationToken situationToken)
+        {
+            var state = situationToken.SituationController.SituationClock.State;
+            if (state == SituationState.Ongoing || state == SituationState.FreshlyStarted)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+}
