@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using Assets.Core;
-using Assets.Core.Interfaces;
 using Assets.CS.TabletopUI;
-using Assets.TabletopUi;
 using TabletopUi.Scripts.Interfaces;
 using UnityEngine;
 
@@ -68,11 +64,6 @@ namespace CultistPupeteer
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.F7) && !this._keyPressLatch)
-            {
-                this._keyPressLatch = true;
-                // this.SetSpeedFaster();
-            }
-            else if (Input.GetKeyDown(KeyCode.F5) && !this._keyPressLatch)
             {
                 this._keyPressLatch = true;
                 this.JumpToNextSituationEvent();

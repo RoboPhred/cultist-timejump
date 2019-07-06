@@ -1,13 +1,12 @@
 # Speedy Cultist
 
-This is a mod for Cultist Simulator to add a faster game speed and allow skipping ahead to the next situation event.
+This is a mod for Cultist Simulator that adds the ability to warp time ahead to when the next verb / situation completes.
 
 ## Usage
 
 Once the mod is installed, 2 hotkeys will be made active:
 
-- F7 - Set the game to a speed higher than "Fast"
-- F8 - Jump time ahead to the next event.
+- F7 - Jump time ahead to the next event.
 
 ## Installation
 
@@ -54,4 +53,4 @@ This project uses the dotnet cli, provided by the .Net SDK.  To compile, simply 
 ## TODO
 
 - Configurable hotkeys
-- Configurable ultra-fast speed
+- Configurable 'fast' game speed
