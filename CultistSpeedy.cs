@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Assets.CS.TabletopUI;
@@ -63,10 +64,13 @@ namespace CultistSpeedy
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F7) && !this._keyPressLatch)
+            if (Input.GetKeyDown(KeyCode.F7))
             {
-                this._keyPressLatch = true;
-                this.JumpToNextSituationEvent();
+                if (!this._keyPressLatch)
+                {
+                    this._keyPressLatch = true;
+                    this.JumpToNextSituationEvent();
+                }
             }
             else
             {
