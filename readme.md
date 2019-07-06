@@ -2,6 +2,8 @@
 
 This is a mod for Cultist Simulator that adds the ability to warp time ahead to when the next verb / situation completes.
 
+Download the latest release [here](https://github.com/RoboPhred/cultist-speedy/releases/).
+
 ## Usage
 
 Once the mod is installed, 2 hotkeys will be made active:
