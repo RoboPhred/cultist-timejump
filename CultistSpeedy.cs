@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CultistSpeedy
 {
-    [BepInEx.BepInPlugin("net.robophreddev.CultistSimulator.CultistSpeedy", "CultistSpeedy", "0.0.1")]
+    [BepInEx.BepInPlugin("net.robophreddev.CultistSimulator.CultistSpeedy", "CultistSpeedy", "0.0.2")]
     public class CultistSpeedyMod : BepInEx.BaseUnityPlugin
     {
         private bool _keyPressLatch = false;
