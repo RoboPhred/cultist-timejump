@@ -6,7 +6,7 @@ Download the latest release [here](https://github.com/RoboPhred/cultist-speedy/r
 
 ## Usage
 
-Once the mod is installed, 2 hotkeys will be made active:
+Once the mod is installed, the following hotkeys are available:
 
 - F7 - Jump time ahead to the next event.
 
@@ -75,7 +75,7 @@ try to log errors when it cannot do it's job properly.  Create a github issue wi
 
 ### Dependencies
 
-Project dependencies should be placed in a folder called `externals`, placed in the project's root directory.
+Project dependencies should be placed in a folder called `externals` in the project's root directory.
 This folder should include:
 - BepInEx.dll - Copied from the BepInEx 5.0 installation under `BepInEx/core`
 - Assembly-CSharp.dll - Copied from `Cultist Simulator/cultistsimulator_Data/Managed`
