@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <RootNamespace>CultistPuppeteer</RootNamespace>
+    <RootNamespace>CultistSpeedy</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
