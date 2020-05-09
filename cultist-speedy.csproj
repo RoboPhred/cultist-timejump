@@ -18,5 +18,8 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>.\externals\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>.\externals\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>    
   </ItemGroup>
 </Project>

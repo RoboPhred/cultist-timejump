@@ -81,6 +81,7 @@ This folder should include:
 - Assembly-CSharp.dll - Copied from `Cultist Simulator/cultistsimulator_Data/Managed`
 - UnityEngine.CoreModule.dll - Copied from `Cultist Simulator/cultistsimulator_Data/Managed`
 - UnityEngine.dll - Copied from `Cultist Simulator/cultistsimulator_Data/Managed`
+- UnityEngine.InputLegacyModule.dll - Copied from `Cultist Simulator/cultistsimulator_Data/Managed`
 
 ### Compiling
 
