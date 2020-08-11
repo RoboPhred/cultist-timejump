@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Assets.CS.TabletopUI;
+using Assets.TabletopUi;
 using TabletopUi.Scripts.Interfaces;
 using UnityEngine;
+using BepInEx.Configuration;
+using System.IO;
 
-namespace CultistSpeedy
+namespace CultistTimejump
 {
-    [BepInEx.BepInPlugin("net.robophreddev.CultistSimulator.CultistSpeedy", "CultistSpeedy", "0.0.2")]
-    public class CultistSpeedyMod : BepInEx.BaseUnityPlugin
+    [BepInEx.BepInPlugin("net.robophreddev.CultistSimulator.CultistTimejump", "CultistTimejump", "1.0.0")]
+    public class CultistTimejumpPlugin : BepInEx.BaseUnityPlugin
     {
-        private bool _keyPressLatch = false;
+        private ConfigEntry<KeyboardShortcut> SkipTimeKey;
 
         private TabletopTokenContainer TabletopTokenContainer
         {
@@ -58,22 +60,20 @@ namespace CultistSpeedy
 
         void Start()
         {
-            this.Logger.LogInfo("CultistSpeedy initialized.");
+            SkipTimeKey = Config.Bind(new ConfigDefinition("Hotkeys", "SkipTimeKey"), new KeyboardShortcut(KeyCode.F));
+            if (!File.Exists(Config.ConfigFilePath))
+            {
+                Config.Save();
+            }
+
+            this.Logger.LogInfo("CultistTimejump initialized.");
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F7))
+            if (SkipTimeKey.Value.IsDown())
             {
-                if (!this._keyPressLatch)
-                {
-                    this._keyPressLatch = true;
-                    this.JumpToNextSituationEvent();
-                }
-            }
-            else
-            {
-                this._keyPressLatch = false;
+                this.JumpToNextSituationEvent();
             }
         }
 
@@ -107,7 +107,11 @@ namespace CultistSpeedy
             }
 
             heart.AdvanceTime(timeRemaining);
-            this.Logger.LogInfo("Time incremented by " + timeRemaining);
+
+            // Force magnet slots to trigger
+            var outstandingSlotsToFill = Reflection.GetPrivateField<HashSet<TokenAndSlot>>(heart, "outstandingSlotsToFill");
+            outstandingSlotsToFill = Registry.Retrieve<ITabletopManager>().FillTheseSlotsWithFreeStacks(outstandingSlotsToFill);
+            Reflection.SetPrivateField(heart, "outstandingSlotsToFill", outstandingSlotsToFill);
         }
 
         IEnumerable<SituationToken> GetAllSituations()
