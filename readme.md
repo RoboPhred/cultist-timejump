@@ -2,6 +2,9 @@
 
 This is a mod for Cultist Simulator that adds the ability to warp time ahead to when the next verb / situation completes.
 
+When jumping time, the mod will look at all ongoing situations, and warp time to complete the situation with the least amount of time remaining.
+After warping time, it will activate all magnet slots.  This also works when the game is paused, and the game will remain paused after the jump.
+
 Download the latest release [here](https://github.com/RoboPhred/cultist-timejump/releases/).
 
 ## Usage
