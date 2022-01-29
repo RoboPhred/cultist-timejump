@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using Assets.CS.TabletopUI;
 using Assets.TabletopUi;
-using TabletopUi.Scripts.Interfaces;
 using UnityEngine;
 using BepInEx.Configuration;
 using System.IO;
@@ -20,7 +19,7 @@ namespace CultistTimejump
             get
             {
                 {
-                    var tabletopManager = (TabletopManager)Registry.Retrieve<ITabletopManager>();
+                    var tabletopManager = Registry.Get<TabletopManager>();
                     if (tabletopManager == null)
                     {
                         this.Logger.LogError("Could not fetch TabletopManager");
@@ -35,22 +34,17 @@ namespace CultistTimejump
         {
             get
             {
-                var tabletopManager = (TabletopManager)Registry.Retrieve<ITabletopManager>();
-                if (tabletopManager == null)
+                var heartGo = GameObject.Find("Heart");
+                if (heartGo == null)
                 {
-                    this.Logger.LogError("Could not fetch TabletopManager");
+                    this.Logger.LogError("Could not fetch Heart game object.");
                 }
 
-                var heartField = tabletopManager.GetType().GetField("_heart", BindingFlags.NonPublic | BindingFlags.Instance);
-                if (heartField == null)
-                {
-                    this.Logger.LogError("Could not get TabletopManager._heart field");
-                }
+                var heart = heartGo.GetComponent<Heart>();
 
-                var heart = (Heart)heartField.GetValue(tabletopManager);
                 if (heart == null)
                 {
-                    this.Logger.LogError("TabletopManager._heart is null");
+                    this.Logger.LogError("Could not get heart from Heart game object.");
                 }
 
                 return heart;
@@ -106,11 +100,11 @@ namespace CultistTimejump
                 return;
             }
 
-            heart.AdvanceTime(timeRemaining);
+            heart.FastForward(timeRemaining);
 
             // Force magnet slots to trigger
             var outstandingSlotsToFill = Reflection.GetPrivateField<HashSet<TokenAndSlot>>(heart, "outstandingSlotsToFill");
-            outstandingSlotsToFill = Registry.Retrieve<ITabletopManager>().FillTheseSlotsWithFreeStacks(outstandingSlotsToFill);
+            outstandingSlotsToFill = Registry.Get<TabletopManager>().FillTheseSlotsWithFreeStacks(outstandingSlotsToFill);
             Reflection.SetPrivateField(heart, "outstandingSlotsToFill", outstandingSlotsToFill);
         }
 

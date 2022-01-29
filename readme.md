@@ -4,6 +4,10 @@ This is a mod for Cultist Simulator that adds the ability to warp time ahead to 
 
 Download the latest release [here](https://github.com/RoboPhred/cultist-speedy/releases/).
 
+# Supported Versions
+
+This mod supports Cultist Sumulator `2021.1.b.2`.
+
 ## Usage
 
 Once the mod is installed, the following hotkeys are available:
