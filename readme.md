@@ -7,7 +7,7 @@ After warping time, it will activate all magnet slots.  This also works when the
 
 Download the latest release [here](https://github.com/RoboPhred/cultist-timejump/releases/).
 
-# Supported Versions
+## Supported Versions
 
 This mod supports Cultist Sumulator `2021.1.b.2`.
 
