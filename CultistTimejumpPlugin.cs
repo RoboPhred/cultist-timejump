@@ -10,7 +10,7 @@ using System.IO;
 
 namespace CultistTimejump
 {
-    [BepInEx.BepInPlugin("net.robophreddev.CultistSimulator.CultistTimejump", "CultistTimejump", "1.0.0")]
+    [BepInEx.BepInPlugin("net.robophreddev.CultistSimulator.CultistTimejump", "CultistTimejump", "1.0.1")]
     public class CultistTimejumpPlugin : BepInEx.BaseUnityPlugin
     {
         private ConfigEntry<KeyboardShortcut> SkipTimeKey;
