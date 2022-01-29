@@ -2,7 +2,10 @@
 
 This is a mod for Cultist Simulator that adds the ability to warp time ahead to when the next verb / situation completes.
 
-Download the latest release [here](https://github.com/RoboPhred/cultist-speedy/releases/).
+When jumping time, the mod will look at all ongoing situations, and warp time to complete the situation with the least amount of time remaining.
+After warping time, it will activate all magnet slots.  This also works when the game is paused, and the game will remain paused after the jump.
+
+Download the latest release [here](https://github.com/RoboPhred/cultist-timejump/releases/).
 
 # Supported Versions
 
@@ -12,7 +15,12 @@ This mod supports Cultist Sumulator `2021.1.b.2`.
 
 Once the mod is installed, the following hotkeys are available:
 
-- F7 - Jump time ahead to the next event.
+- F - Jump time ahead to the next event.
+
+Hotkeys can be changed in the configuration
+
+## Configuration
+Hotkeys are configurable in the BepInEx/config folder.  A config file will be generated when the mod is first ran.
 
 ## Installation
 
@@ -55,24 +63,22 @@ If BepInEx is installed and configured properly, you should see messages similar
 [Message:   BepInEx] Preloader finished
 ```
 
-If you do not see these messages, and your terminal window remains blank, then you probably forgot to turn off `AllowRuntimePatches`. Read the section on Installing again.
-
 Once you have confirmed BepInEx is installed properly, look for the mod loading message. Once you start the game from the launcher, the terminal window should contain:
 
 ```
-[Info   :   BepInEx] Loading [CultistSpeedy 0.0.1]
+[Info   :   BepInEx] Loading [CultistTimejump 1.0.0]
 ```
 
 and
 
 ```
-[Info   :CultistSpeedy] CultistSpeedy initialized.
+[Info   :CultistTimejump] CultistTimejump initialized.
 ```
 
 If you do not see these lines, then the mod isn't in the correct folder. Check the Installation instructions for details on where to put the mod.
 
-If you have confirmed all of the above and still are having trouble, try looking at the terminal for lines starting with `[Error :CultistSpeedy]`. The mod will
-try to log errors when it cannot do it's job properly. Create a github issue with any CultistSpeedy error messages you find, and I will try to help you further.
+If you have confirmed all of the above and still are having trouble, try looking at the terminal for lines starting with `[Error :CultistTimejump]`. The mod will
+try to log errors when it cannot do it's job properly. Create a github issue with any CultistTimejump error messages you find, and I will try to help you further.
 
 ## Development
 
@@ -90,7 +96,3 @@ This folder should include:
 
 This project uses the dotnet cli, provided by the .Net SDK. To compile, simply use `dotnet build` on the project's root directory.
 
-## TODO
-
-- Configurable hotkeys
-- Configurable 'fast' game speed
